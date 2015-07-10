@@ -69,6 +69,10 @@ RECOVERY_FSTAB_VERSION := 2
 LOCAL_CFLAGS += -DRECOVERY_API_VERSION=$(RECOVERY_API_VERSION)
 LOCAL_CFLAGS += -Wno-unused-parameter
 
+ifeq ($(TW_BERG_TWRP), true)
+  LOCAL_CFLAGS += -DBERG_TWRP
+endif
+
 #LOCAL_STATIC_LIBRARIES := \
 #    libext4_utils_static \
 #    libsparse_static \
@@ -490,10 +494,20 @@ include $(commands_recovery_local_path)/injecttwrp/Android.mk \
     $(commands_recovery_local_path)/openaes/Android.mk \
     $(commands_recovery_local_path)/toolbox/Android.mk \
     $(commands_recovery_local_path)/libmincrypt/Android.mk \
-    $(commands_recovery_local_path)/twrpTarMain/Android.mk \
-    $(commands_recovery_local_path)/mtp/Android.mk \
     $(commands_recovery_local_path)/minzip/Android.mk \
     $(commands_recovery_local_path)/dosfstools/Android.mk
+
+# berg
+ifneq ($(TW_EXCLUDE_MTP), true)
+    include $(commands_recovery_local_path)/mtp/Android.mk
+endif
+
+# berg
+ifneq ($(TW_OEM_BUILD), true)
+    include $(commands_recovery_local_path)/twrpTarMain/Android.mk
+endif
+
+
 
 ifeq ($(TW_INCLUDE_CRYPTO), true)
     include $(commands_recovery_local_path)/crypto/lollipop/Android.mk

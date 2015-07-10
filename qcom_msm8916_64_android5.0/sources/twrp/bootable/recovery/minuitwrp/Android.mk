@@ -26,6 +26,10 @@ else
   LOCAL_C_INCLUDES += $(commands_recovery_local_path)/minuitwrp/include
 endif
 
+ifeq ($(TW_BERG_TWRP), true)
+  LOCAL_CFLAGS += -DBERG_TWRP
+endif
+
 LOCAL_C_INCLUDES += \
     external/libpng \
     external/zlib \

@@ -163,6 +163,7 @@ int getFbYres (void) {
 
 static int get_framebuffer(GGLSurface *fb)
 {
+#ifndef BERG_TWRP
     int fd;
     void *bits;
 
@@ -246,6 +247,53 @@ static int get_framebuffer(GGLSurface *fb)
         close(fd);
         return -1;
     }
+    #error asdfdd
+#else
+    int fd;
+    void *bits;
+
+    //struct fb_fix_screeninfo fi;
+
+    fd = open("/dev/graphics/fb0", O_RDWR);
+    if (fd < 0) {
+    	perror("cannot open fb0");
+    	return NULL;
+    }
+
+    if (ioctl(fd, FBIOGET_FSCREENINFO, &fi) < 0) {
+    	perror("failed to get fb0 info");
+    	close(fd);
+    	return NULL;
+    }
+
+    if (ioctl(fd, FBIOGET_VSCREENINFO, &vi) < 0) {
+    	perror("failed to get fb0 info");
+    	close(fd);
+    	return NULL;
+    }
+
+    // We print this out for informational purposes only, but
+    // throughout we assume that the framebuffer device uses an RGBX
+    // pixel format.  This is the case for every development device I
+    // have access to.	For some of those devices (eg, hammerhead aka
+    // Nexus 5), FBIOGET_VSCREENINFO *reports* that it wants a
+    // different format (XBGR) but actually produces the correct
+    // results on the display when you write RGBX.
+    //
+    // If you have a device that actually *needs* another pixel format
+    // (ie, BGRX, or 565), patches welcome...
+
+    fprintf(stderr,"fb0 reports (possibly inaccurate):\n"
+    	   "  vi.bits_per_pixel = %d\n"
+    	   "  vi.red.offset   = %3d   .length = %3d\n"
+    	   "  vi.green.offset = %3d   .length = %3d\n"
+    	   "  vi.blue.offset  = %3d   .length = %3d\n",
+    	   vi.bits_per_pixel,
+    	   vi.red.offset, vi.red.length,
+    	   vi.green.offset, vi.green.length,
+    	   vi.blue.offset, vi.blue.length);
+
+#endif//BERG_TWRP
 
 #ifdef MSM_BSP
     has_overlay = target_has_overlay(fi.id);

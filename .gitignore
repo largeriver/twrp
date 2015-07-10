@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+# projects
+COSHIP_X1_5_0_FDH

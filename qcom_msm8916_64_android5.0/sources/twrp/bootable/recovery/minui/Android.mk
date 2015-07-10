@@ -29,6 +29,10 @@ else
   LOCAL_C_INCLUDES += $(commands_recovery_local_path)/minui/include
 endif
 
+ifeq ($(TW_BERG_TWRP), true)
+  LOCAL_CFLAGS += -DBERG_TWRP
+endif
+
 LOCAL_STATIC_LIBRARY := libpng
 LOCAL_WHOLE_STATIC_LIBRARIES := libpixelflinger_static
 LOCAL_MODULE := libminui
@@ -36,6 +40,7 @@ LOCAL_MODULE := libminui
 # This used to compare against values in double-quotes (which are just
 # ordinary characters in this context).  Strip double-quotes from the
 # value so that either will work.
+
 
 ifeq ($(subst ",,$(TARGET_RECOVERY_PIXEL_FORMAT)),RGBX_8888)
   LOCAL_CFLAGS += -DRECOVERY_RGBX
@@ -87,6 +92,10 @@ ifeq ($(TW_TARGET_USES_QCOM_BSP), true)
   endif
 else
   LOCAL_C_INCLUDES += $(commands_recovery_local_path)/minui/include
+endif
+
+ifeq ($(TW_BERG_TWRP), true)
+  LOCAL_CFLAGS += -DBERG_TWRP
 endif
 
 LOCAL_C_INCLUDES +=\
