@@ -104,34 +104,32 @@ TARGET_HW_DISK_ENCRYPTION := true
 #Enable SW based full disk encryption
 TARGET_SWV8_DISK_ENCRYPTION := true
 
-##TWRP
+#####TWRP
 TW_BERG_TWRP := true
+
 #TARGET_PREBUILT_KERNEL := device/xiaomi/cancro/kernel
 #TARGET_RECOVERY_FSTAB := device/xiaomi/cancro/recovery/twrp.fstab
 #TARGET_RECOVERY_INITRC = device/qcom/msm8916_64/twrp/init.rc
 #BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 #TARGET_RECOVERY_INITRC := device/xiaomi/cancro/recovery/init.rc
 
-DEVICE_RESOLUTION := 1080*1920
+
 TW_OEM_BUILD := true
 TW_USE_TOOLBOX :=true
 TW_EXCLUDE_ENCRYPTED_BACKUPS := true
+RECOVERY_SDCARD_ON_DATA := true
 
 
-
-
+TW_CUSTOM_THEME := device/qcom/msm8916_64/recovery/twres
+DEVICE_RESOLUTION := 1080x1920
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
-RECOVERY_SDCARD_ON_DATA := true
+
 #TW_TARGET_USES_QCOM_BSP := true
 
-#ifeq ($(TW_OEM_BUILD),true)
-#    LOCAL_CFLAGS += -DTW_OEM_BUILD
-#    BOARD_HAS_NO_REAL_SDCARD := true
-#    TW_USE_TOOLBOX := true
-#    TW_EXCLUDE_SUPERSU := true
-#    TW_EXCLUDE_MTP := true
-#endif
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+TW_MAX_BRIGHTNESS := 255
+
 
 #TWRP_EVENT_LOGGING := false # enables touch event logging to help debug touchscreen issues (don't leave this on for a release - it will fill up your logfile very quickly)
 #TW_NO_USB_STORAGE := true #-- removes the USB storage button on devices that don't support USB storage

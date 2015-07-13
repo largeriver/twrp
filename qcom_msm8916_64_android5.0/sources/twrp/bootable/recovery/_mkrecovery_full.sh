@@ -73,9 +73,6 @@ cp -rf $recovery_resources_common/* $TARGET_RECOVERY_ROOT_OUT/res
 #cp -f bootable/recovery/fonts/18x32.png out/target/product/msm8916_64/recovery/root/res/images/font.png
 cp -f $recovery_font $TARGET_RECOVERY_ROOT_OUT/res/images/font.png
 
-#add by berg to fix
-mkdir -p $TARGET_RECOVERY_ROOT_OUT/twres/
-cp $SOURCE_RECOVERY/gui/devices/portrait/res $TARGET_RECOVERY_ROOT_OUT/twres/
 
 ##??$foreach item,$recovery_root_private, \
 #	cp -rf $item $TARGET_RECOVERY_OUT/
@@ -104,6 +101,9 @@ echo -e ${PRT_IMG}"----- Made recovery filesystem -------- $TARGET_RECOVERY_ROOT
 touch $TARGET_RECOVERY_ROOT_TIMESTAMP
 
 
+#add by berg
+cp -f $TARGET_RECOVERY_ROOT_OUT/sbin/sh $TARGET_RECOVERY_ROOT_OUT/system/bin/
+cp -f $TARGET_RECOVERY_ROOT_OUT/sbin/logcat $TARGET_RECOVERY_ROOT_OUT/system/bin/
 
 ###########################################
 #out/host/linux-x86/bin/mkbootfs out/target/product/msm8916_64/recovery/root | out/host/linux-x86/bin/minigzip > out/target/product/msm8916_64/ramdisk-recovery.img
